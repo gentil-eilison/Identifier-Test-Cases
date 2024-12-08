@@ -8,56 +8,32 @@ public class IdentifierTests {
     private final Identifier id = new Identifier();
 
     @Test
-    public void emptyIdentifier() {
-        boolean validIdentifier = id.validateIdentifier("");
-        assertFalse(validIdentifier);
+    public void lengthLessThanOneAndEmpty() {
+        assertFalse(id.validateIdentifier(""));
     }
 
     @Test
-    public void onlyNumber() {
-        boolean validIdentifier = id.validateIdentifier("1");
-        assertFalse(validIdentifier);
+    public void startsWithLetterValidCharsAndCorrectLength() {
+        assertTrue(id.validateIdentifier("a"));
     }
 
     @Test
-    public void onlyCharacter() {
-        boolean validIdentifier = id.validateIdentifier("a");
-        assertTrue(validIdentifier);
+    public void startsWithLetterValidCharsAndUpperLimitLength() {
+        assertTrue(id.validateIdentifier("a12345"));
+    }
+
+    @Test
+    public void longerThanExpected() {
+        assertFalse(id.validateIdentifier("a123456"));
     }
 
     @Test
     public void startsWithNumber() {
-        boolean validIdentifier = id.validateIdentifier("1b3fas");
-        assertFalse(validIdentifier);
+        assertFalse(id.validateIdentifier("2"));
     }
 
     @Test
-    public void startsWithSymbol() {
-        boolean validIdentifier = id.validateIdentifier("-fas34");
-        assertFalse(validIdentifier);
-    }
-
-    @Test
-    public void tooManyCharacters() {
-        boolean validIdentifier = id.validateIdentifier("abcqyw3");
-        assertFalse(validIdentifier);
-    }
-
-    @Test
-    public void correctCharactersAndCorrectLength() {
-        boolean validIdentifier = id.validateIdentifier("abc2yw");
-        assertTrue(validIdentifier);
-    }
-
-    @Test
-    public void symbolInIdentifier() {
-        boolean validIdentifier = id.validateIdentifier("ab3c@7");
-        assertFalse(validIdentifier);
-    }
-
-    @Test
-    public void identifierLengthInRange() {
-        boolean validIdentifier = id.validateIdentifier("sktt1");
-        assertTrue(validIdentifier);
+    public void containsSymbols() {
+        assertFalse(id.validateIdentifier("A@"));
     }
 }
